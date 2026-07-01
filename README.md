@@ -8,6 +8,9 @@ An end-to-end Machine Learning pipeline designed to predict the global sales of 
 [![NumPy](https://img.shields.io/badge/numpy-2.1+-013243.svg?logo=numpy)](https://numpy.org/)
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626.svg?logo=jupyter)](https://jupyter.org/)
 
+## 📊 Market Insights & Model Visualizations
+<img width="1588" height="638" alt="image" src="https://github.com/user-attachments/assets/ef7fdff5-742b-4ea7-9fa0-b40dc0dc480a" />
+
 ## 🎯 Project Overview
 Predicting how well a video game will sell is notoriously difficult. This project explores the gaming market by building a Machine Learning pipeline that estimates global sales based purely on pre-release categorical data.
 
