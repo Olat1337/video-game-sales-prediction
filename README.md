@@ -1,39 +1,76 @@
-# Video Game Sales Prediction Pipeline 🎮📊
+# 🎮 Global Video Game Sales Predictor
 
-## 📌 Overview
-This project is an end-to-end Machine Learning pipeline designed to predict the global sales of video games based on categorical features such as Platform, Genre, and Publisher. The primary objective is to establish a regression baseline, evaluate model performance, and analyze how decision tree ensembles handle heavy outliers (e.g., blockbuster hits).
+An end-to-end Machine Learning pipeline designed to predict the global sales of video games based on categorical features such as Platform, Genre, and Publisher.
 
-## 🛠️ Tech Stack
-* **Language:** Python 3.x
-* **Data Manipulation:** `pandas`, `numpy`
-* **Machine Learning:** `scikit-learn` (LinearRegression, RandomForestRegressor)
+[![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
+[![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.5+-F7931E.svg?logo=scikit-learn)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/pandas-2.2+-150458.svg?logo=pandas)](https://pandas.pydata.org/)
+[![NumPy](https://img.shields.io/badge/numpy-2.1+-013243.svg?logo=numpy)](https://numpy.org/)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626.svg?logo=jupyter)](https://jupyter.org/)
 
-## ⚙️ Project Workflow
-1. **Data Preprocessing:** Cleaned the raw dataset by removing missing values and dropping features causing data leakage (e.g., regional sales like `NA_Sales`, `EU_Sales`).
-2. **Feature Engineering:** Transformed text-based categorical variables into a sparse numerical matrix using One-Hot Encoding (`pd.get_dummies`).
-3. **Modeling & Evaluation:** * Trained a baseline **Linear Regression** model.
-   * Trained a **Random Forest Regressor** with restricted depth (`max_depth=15`) to capture non-linear relationships without overfitting.
-   * Applied target clipping (`np.clip`) to prevent mathematically possible but physically impossible negative sales predictions.
+## 🎯 Project Overview
+Predicting how well a video game will sell is notoriously difficult. This project explores the gaming market by building a Machine Learning pipeline that estimates global sales based purely on pre-release categorical data.
 
-## 📊 Key Insights & Results
-* **Baseline vs. Ensemble:** The Random Forest achieved a better Mean Absolute Error (MAE), predicting "average" games more accurately. However, Linear Regression handled extreme outliers better, resulting in a lower Root Mean Squared Error (RMSE).
-* **Extrapolation Limits:** Decision trees inherently struggle to predict values higher than the maximum seen in the training set. Consequently, the Random Forest heavily underestimated mega-hits like *GTA V* or *Wii Sports*.
-* **Feature Limitations:** The current feature set (Platform, Genre, Publisher) lacks sufficient predictive power to confidently identify a blockbuster. Future iterations require data enrichment (e.g., marketing budgets, Metacritic review scores).
+This project was built to demonstrate a clean Data Science workflow-from preventing data leakage during preprocessing, to feature encoding, and finally comparing baseline linear models against advanced tree-based ensembles (Random Forest) to observe how they handle massive industry outliers.
+
+## 🛠️ Technology Stack
+
+To ensure rigorous analysis and model evaluation, the project utilizes the standard Python data science ecosystem.
+
+### Data Engineering & EDA
+* **Pandas & NumPy:** For data manipulation, handling missing values, and matrix transformations.
+* **Seaborn & Matplotlib:** For generating visual market insights, comparing predictions against reality using log-scale error bands, and mapping numeric feature importance.
+
+### Machine Learning
+* **Scikit-Learn:** Built and tuned both a baseline Linear Regression model and a constrained Random Forest Regressor. 
+* **Data Leakage Mitigation:** Ensured that post-release regional sales data (`NA_Sales`, `EU_Sales`) were strictly excluded from the training environment.
+
+## 📈 Data & Modeling Workflow
+
+The complete analysis and model training are documented in `video_game_sales_prediction.ipynb`:
+
+* **Data Cleaning:** Removed identifiers lacking predictive power and dropped features that would cause data leakage.
+* **Feature Encoding:** Converted text categories (e.g., "Action", "PS4", "Ubisoft") into a sparse numerical matrix using One-Hot Encoding.
+* **Train/Test Split:** Isolated the `Global_Sales` target and split the data 80/20 to validate model generalization on unseen games.
+* **Modeling:** Trained a baseline Linear Regression (with `np.clip` to prevent negative sales) and a Random Forest Regressor restricted to `max_depth=15` to capture non-linear relationships.
+* **Overfitting Analysis:** Benchmarked the constrained Random Forest against an unrestricted depth model to analyze variance and memorization behaviors.
+
+## 🧠 Key Technical & Visual Insights
+
+* **The Blockbuster Ceiling:** As visualized in the log-scale scatter plot, the Random Forest is highly accurate for standard games (falling neatly within the ± 2x error margin band) but hits a hard predictive ceiling, completely failing to extrapolate the massive sales of hits (1M+ copies).
+* **Nintendo's Market Power:** Feature importance analysis revealed that alongside the release `Year`, being published by `Nintendo` is the absolute strongest categorical driver of global sales, vastly outweighing specific game genres or console platforms.
+* **Overfitting is Real:** The unrestricted Random Forest model memorized specific developer/platform combinations from the training data, ultimately failing to capture true underlying patterns and performing worse on the unseen test data.
 
 ## 🚀 How to Run Locally
 
-If you want to run this pipeline on your local Linux/macOS machine, follow these steps in your terminal:
+If you would like to run this analysis on your own machine, follow these steps:
 
 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Olat1337/video-game-sales-prediction.git
-   cd video-game-sales-prediction
+```bash
+git clone https://github.com/Olat1337/video-game-sales-prediction.git
+cd video-game-sales-prediction
+```
 2. **Create and activate a virtual environment:**
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate
+On macOS/Linux:
+
+```Bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+On Windows:
+
+```Bash
+python -m venv .venv
+.venv\Scripts\activate
+```
 3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-4. **Run the pipeline:**
-  Open the Jupyter Notebook (video_game_sales_prediction.ipynb) or execute the Python script to view the model training and evaluation process.
+
+```Bash
+pip install -r requirements.txt
+```
+4. **Run the Notebook:**
+Launch Jupyter to explore the data, view the models, and generate the dashboard graphs.
+
+```Bash
+jupyter notebook
+```
